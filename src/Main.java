@@ -1,18 +1,26 @@
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         UniversalTU universalTU = new UniversalTU(100);
-        
-        // Accept for L = {*00* | {0,1}*}
-        String input = "1010101000";
-        String[][] transitionFunction = {
-            {"q1", "1", "q1", "1", "R"},
-            {"q1", "0", "q3", "0", "R"},
-            {"q3", "1", "q1", "1", "R"},
-            {"q3", "0", "q4", "0", "R"},
-            {"q4", "0", "q4", "0", "R"},
-            {"q4", "1", "q4", "1", "R"},
-            {"q4", "␣", "q2", "␣", "R"}      
-        };
+
+        // Define the characters and states
+        String[] characters = {"0", "1", "␣", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+        String[] states = {"q1", "q2", "q3", "q4"};
+
+        // Define the Goedel number of the Turing machine starting with zero 111 then input
+        String goedelNumber = "0101000101001101001010010011000101000010100110001001010010011000010100001010011000010010000100100110000100010010001001111111010101";
+
+        // Create a GoedelNumberCalc object with the Characters and States
+        GoedelNumberCalc goedelNumberCalc = new GoedelNumberCalc(characters, states);
+
+        // Split the Goedel number from the input
+        String[][] transitionFunction = goedelNumberCalc.getTransitionFunction(goedelNumber);
+        System.out.println(Arrays.deepToString(transitionFunction));
+
+        // Get the input for the Turing Machine
+        String input = goedelNumberCalc.getInputForTM();
+        System.out.println("input: " + input);
 
         try {
             boolean bingo = universalTU.run(transitionFunction, input);
