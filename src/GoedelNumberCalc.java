@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class GoedelNumberCalc {
     String inputForTM;
-    String ausgabe = new String();
+    String ausgabe;
     String[] binary = {"0", "00"};
 
     Map<String, String> stateToBinary;
@@ -42,7 +42,7 @@ public class GoedelNumberCalc {
         try {
             inputForTM = parts[1];
         } catch (Exception e) {
-            System.out.println("iwi wird eine exception gecatcht, code wird aber trotzdem ausgeführt und input geschrieben");
+            System.out.println("");
         }
         return goedelNumberWithoutInput;
     }
@@ -77,17 +77,21 @@ public class GoedelNumberCalc {
         transitionFunction2 = new String[functions.length][5];
 
         // Iterate over each function
-        for (int i = 0; i < functions.length; i++) {
-            // Split the function into elements
-            String[] elements = functions[i].split("1");
 
-            // Map the binary strings back to their original values
-            transitionFunction2[i][0] = binaryToState.get(elements[0]);
-            transitionFunction2[i][1] = binaryToInput.get(elements[1]);
-            transitionFunction2[i][2] = binaryToState.get(elements[2]);
-            transitionFunction2[i][3] = binaryToInput.get(elements[3]);
-            transitionFunction2[i][4] = binaryToMovement.get(elements[4]);
-        }
+            for (int i = 0; i < functions.length; i++) {
+                // Split the function into elements
+                String[] elements = functions[i].split("1");
+                if (elements.length != 5) {
+                    System.out.println("Error: Function " + i + " has " + elements.length + " elements");
+                    return null;
+                }
+                // Map the binary strings back to their original values
+                transitionFunction2[i][0] = binaryToState.get(elements[0]);
+                transitionFunction2[i][1] = binaryToInput.get(elements[1]);
+                transitionFunction2[i][2] = binaryToState.get(elements[2]);
+                transitionFunction2[i][3] = binaryToInput.get(elements[3]);
+                transitionFunction2[i][4] = binaryToMovement.get(elements[4]);
+            }
         return transitionFunction2;
 
     }
@@ -139,10 +143,28 @@ public class GoedelNumberCalc {
     }
 
     public String[][] getTransitionFunction(String goedelNumber) {
-        String goedelNumberWithoutInput = GoedelNumberSplitFromInput(goedelNumber);
-        String[][] transitionFunction3 = goedelNumberToTransitionFunction(goedelNumberWithoutInput);
-        return transitionFunction3;
 
+            String goedelNumberWithout1;
+            if (goedelNumber.contains("2") || goedelNumber.contains("3") || goedelNumber.contains("4") || goedelNumber.contains("5") || goedelNumber.contains("6") || goedelNumber.contains("7") || goedelNumber.contains("8") || goedelNumber.contains("9")) {
+                goedelNumber = decimalStringToBinaryString(goedelNumber);
+            }
+            if (goedelNumber.startsWith("1")){
+                goedelNumberWithout1 = goedelNumber.substring(1);
+            }
+            else {
+                goedelNumberWithout1 = goedelNumber;
+            }
+            String goedelNumberWithoutInput = GoedelNumberSplitFromInput(goedelNumberWithout1);
+            String[][] transitionFunction3 = goedelNumberToTransitionFunction(goedelNumberWithoutInput);
+            return transitionFunction3;
+
+    }
+
+    public String decimalStringToBinaryString(String decimalString) {
+        long decimalNumber = Long.parseLong(decimalString);
+        String binaryString = Long.toBinaryString(decimalNumber);
+        System.out.println("Binary: " + binaryString);
+        return binaryString;
     }
 
 
