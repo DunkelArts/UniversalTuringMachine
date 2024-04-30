@@ -1,13 +1,18 @@
+import java.util.concurrent.TimeUnit;
+
 class UniversalTU {
 
     private Tape tape;
     private String[][] transitionFunction;
+    private int stepCounter;
+    private boolean stepMode;
 
     public UniversalTU(int tapesize) {
         this.tape = new Tape(tapesize);
+        this.stepCounter = 0;
     }
 
-    public boolean run(String[][] transitionFunction, String input) throws OutOfTapeException {
+    public boolean run(String[][] transitionFunction, String input) throws OutOfTapeException, InterruptedException {
         this.transitionFunction = transitionFunction;
         String currentstate = "q1";
 
@@ -19,6 +24,13 @@ class UniversalTU {
                 symbolRead = tape.read();
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new OutOfTapeException();
+            }
+            if(stepMode){
+                System.out.println("State: " + currentstate);
+                System.out.println(tape.printTape());
+                System.out.println(tape.getPosition());
+                System.out.println("Step: " + stepCounter);
+                TimeUnit.SECONDS.sleep(1);
             }
 
             String myfunc[] = getTransitionFunction(currentstate, symbolRead);
@@ -35,8 +47,8 @@ class UniversalTU {
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new OutOfTapeException();
             }
-
-            currentstate = myfunc[2];;
+            stepCounter++;
+            currentstate = myfunc[2];
         }
 
     }
@@ -69,6 +81,12 @@ class UniversalTU {
         for (int i = 0; i < input.length(); i++) {
             tape.step("L");
         }
+    }
+    public int getStepCounter() {
+        return stepCounter;
+    }
+    public void setStepmode(boolean stepmode) {
+        this.stepMode = stepmode;
     }
 
 }

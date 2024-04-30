@@ -1,7 +1,8 @@
 import java.util.Arrays;
+import java.util.Scanner;
 //01010001010011010010100100110001010000101001100010010100100110000101000010100110000100100001001001100001000100100010011111110101001
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         UniversalTU universalTU = new UniversalTU(100);
 
         // Define the characters and states
@@ -9,7 +10,20 @@ public class Main {
         String[] states = {"q1", "q2", "q3", "q4"};
 
         // Define the Goedel number of the Turing machine starting with zero-Goedel number-111-Input or as decimal
-        String goedelNumber = "01010001010011010010100100110001010000101001100010010100100110000101000010100110000100100001001001100001000100100010011111110101001";
+        System.out.println("Please enter a Goedel number for the Turing Machine: ");
+        Scanner scanner = new Scanner(System.in);
+        String goedelNumber = scanner.nextLine();
+        System.out.println("Stepmode? (y/n)");
+        String stepmode = scanner.nextLine();
+
+        if (stepmode.equals("y")) {
+            universalTU.setStepmode(true);
+        }
+        else{
+            universalTU.setStepmode(false);
+        }
+
+        //String goedelNumber = "01010001010011010010100100110001010000101001100010010100100110000101000010100110000100100001001001100001000100100010011111110101001";
 
         // Create a GoedelNumberCalc object with the Characters and States
         GoedelNumberCalc goedelNumberCalc = new GoedelNumberCalc(characters, states);
@@ -33,9 +47,11 @@ public class Main {
                 } else {
                     System.out.println("this Turing Machine does not accept");
                 }
-
+            System.out.println("");
             System.out.println("--- tape content after computation ---");
             System.out.println(universalTU.getTape().printTape());
+            System.out.println(universalTU.getTape().getPosition());
+            System.out.println("Number of Steps: " + universalTU.getStepCounter());
             }
         } catch (OutOfTapeException e) {
             System.out.println("Not enough tape for this computation");

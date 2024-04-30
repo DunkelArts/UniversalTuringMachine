@@ -40,4 +40,22 @@ public class Tape {
         }
         return sb.toString();
     }
+
+    //Create a string with the current position of the tape head
+    public String getPosition() {
+        String []headPosition = new String[tape.length];
+        for (int i = 0; i < tape.length; i++) {
+            if (i == position) {
+                headPosition[i] = "^";
+            }
+            else {
+                headPosition[i] = " ";
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for(String str : headPosition) {
+            sb.append(str);
+        }
+        return sb.toString();
+    }
 }
