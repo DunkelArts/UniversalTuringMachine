@@ -166,7 +166,7 @@ public class GoedelNumberCalc {
     }
 
     public String decimalStringToBinaryString(String decimalString) {
-        BigInteger decimalNumber = BigInteger.valueOf(Long.parseLong(decimalString));
+        BigInteger decimalNumber = new BigInteger(decimalString);
         String binaryString = decimalNumber.toString(2);
         System.out.println("Binary: " + binaryString);
         return binaryString;
