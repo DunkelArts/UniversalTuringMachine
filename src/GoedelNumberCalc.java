@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -165,8 +166,8 @@ public class GoedelNumberCalc {
     }
 
     public String decimalStringToBinaryString(String decimalString) {
-        long decimalNumber = Long.parseLong(decimalString);
-        String binaryString = Long.toBinaryString(decimalNumber);
+        BigInteger decimalNumber = BigInteger.valueOf(Long.parseLong(decimalString));
+        String binaryString = decimalNumber.toString(2);
         System.out.println("Binary: " + binaryString);
         return binaryString;
     }
