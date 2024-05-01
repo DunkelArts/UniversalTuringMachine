@@ -1,18 +1,27 @@
 import java.util.Arrays;
 import java.util.Scanner;
 //01010001010011010010100100110001010000101001100010010100100110000101000010100110000100100001001001100001000100100010011111110101001
+//185943403774763668
 public class Main {
     public static void main(String[] args) throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
         UniversalTU universalTU = new UniversalTU(100);
-
+        String goedelNumber = "";
         // Define the characters and states
         String[] characters = {"0", "1", "␣", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
         String[] states = {"q1", "q2", "q3", "q4"};
-
+        GoedelNumberCalc goedelNumberCalc = new GoedelNumberCalc(characters, states);
         // Define the Goedel number of the Turing machine starting with zero-Goedel number-111-Input or as decimal
-        System.out.println("Please enter a Goedel number for the Turing Machine: ");
-        Scanner scanner = new Scanner(System.in);
-        String goedelNumber = scanner.nextLine();
+        System.out.println("Read Goedel number from file? (y/n)");
+        String readFromFile = scanner.nextLine();
+        if (readFromFile.equals("y")) {
+            goedelNumber = goedelNumberCalc.readGoedelNumberFromFile();
+        }
+        else {
+            System.out.println("Please enter a Goedel number for the Turing Machine: ");
+            goedelNumber = scanner.nextLine();
+        }
+
         System.out.println("Stepmode? (y/n)");
         String stepmode = scanner.nextLine();
 
@@ -26,7 +35,7 @@ public class Main {
         //String goedelNumber = "01010001010011010010100100110001010000101001100010010100100110000101000010100110000100100001001001100001000100100010011111110101001";
 
         // Create a GoedelNumberCalc object with the Characters and States
-        GoedelNumberCalc goedelNumberCalc = new GoedelNumberCalc(characters, states);
+
 
         // Get the transition function from the Goedel number
         String[][] transitionFunction;
@@ -37,7 +46,7 @@ public class Main {
         System.out.println("input: " + input);
 
         try {
-            if (input.isEmpty() || transitionFunction == null) {
+            if (input == null || transitionFunction == null) {
                 System.out.println("No input or transition function found. Turing Machine cannot run.");
             }
             else {
@@ -57,4 +66,4 @@ public class Main {
             System.out.println("Not enough tape for this computation");
         }
     }
-}
+    }

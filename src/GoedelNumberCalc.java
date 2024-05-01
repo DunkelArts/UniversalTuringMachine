@@ -1,6 +1,10 @@
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GoedelNumberCalc {
@@ -167,6 +171,15 @@ public class GoedelNumberCalc {
         return binaryString;
     }
 
+    public String readGoedelNumberFromFile() {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("src/GoedelNumber"));
+            return String.join("", lines);
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            return null;
+        }
+    }
 
 }
 
