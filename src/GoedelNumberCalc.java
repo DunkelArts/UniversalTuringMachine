@@ -11,7 +11,7 @@ import java.util.Map;
 public class GoedelNumberCalc {
     String inputForTM;
     String ausgabe;
-    String[] binary = {"0", "00"};
+    String[] binary = {"0", "00", "000"};
 
     Map<String, String> stateToBinary;
     Map<String, String> inputToBinary;
@@ -20,22 +20,50 @@ public class GoedelNumberCalc {
     Map<String, String> binaryToInput;
     Map<String, String> binaryToMovement;
     String[][] transitionFunctionToGoedelNumber = {
-            {"q1", "0", "q2", "0", "R"},
-            {"q2", "0", "q2", "0", "R"},
-            {"q2", "1", "q3", "1", "R"},
-            {"q3", "0", "q4", "0", "R"},
-            {"q4", "0", "q4", "0", "R"},
-            {"q4", "1", "q1", "1", "R"}
+            {"q1","0","q17","0","R"},
+            {"q1","1","q3","0","R"},
+            {"q17","0","q15","0","R"},
+            {"q17","1","q3","0","R"},
+            {"q3","0","q16","1","R"},
+            {"q3","1","q4","1","R"},
+            {"q4","0","q5","0","L"},
+            {"q4","1","q4","1","R"},
+            {"q5","0","q6","1","R"},
+            {"q5","1","q5","1","R"},
+            {"q6","0","q7","0","L"},
+            {"q6","1","q6","1","L"},
+            {"q7","0","q10","1","L"},
+            {"q7","1","q9","1","L"},
+            {"q8","0","q4","1","R"},
+            {"q8","1","q8","1","L"},
+            {"q9","0","q11","0","L"},
+            {"q9","1","q10","1","L"},
+            {"q10","0","q13","0","R"},
+            {"q10","1","q12","1","L"},
+            {"q11","0","q1","0","R"},
+            {"q11","1","q11","1","L"},
+            {"q12","0","q12","0","R"},
+            {"q12","1","q13","0","R"},
+            {"q13","0","q2","␣","S"},
+            {"q13","1","q13","0","R"},
+            {"q14","0","q2","␣","S"},
+            {"q14","1","q15","0","R"},
+            {"q15","0","q0","0","L"},
+            {"q15","1","q14","0","L"},
+            {"q16","0","q2","␣","S"},
+            {"q16","1","q16","0","L"}
+
     };
 
 
     public GoedelNumberCalc(String[] characters, String[] states) {
         stateToBinary = stateToBinary(states);
         inputToBinary = inputToBinary(characters);
-        movementToBinary = Map.of("L", binary[0], "R", binary[1]);
+        movementToBinary = Map.of("L", binary[0], "R", binary[1], "-", binary[2]);
+        System.out.println(movementToBinary);
         binaryToState = binaryToState(states);
         binaryToInput = binaryToInput(characters);
-        binaryToMovement = Map.of(binary[0], "L", binary[1], "R");
+        binaryToMovement = Map.of(binary[0], "L", binary[1], "R", binary[2], "S");
     }
 
     // Define the encoding for the states, input alphabet, tape alphabet, and movements
@@ -57,19 +85,22 @@ public class GoedelNumberCalc {
     }
 
     public void transitionFunctionToGoedelNumber() {
-        for (String[] function : transitionFunctionToGoedelNumber) {
-            StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-            function[0] = stateToBinary.get(function[0]);
-            function[1] = inputToBinary.get(function[1]);
-            function[2] = stateToBinary.get(function[2]);
-            function[3] = inputToBinary.get(function[3]);
-            function[4] = movementToBinary.get(function[4]);
-            sb = sb.append(function[0] + "1").append(function[1] + "1").append(function[2] + "1").append(function[3] + "1").append(function[4] + "11");
-            ausgabe = ausgabe + sb.toString();
-
+        for (int i = 0; i<transitionFunctionToGoedelNumber.length; i++) {
+            transitionFunctionToGoedelNumber[i][0] = stateToBinary.get(transitionFunctionToGoedelNumber[i][0]) + "1";
+            transitionFunctionToGoedelNumber[i][1] = inputToBinary.get(transitionFunctionToGoedelNumber[i][1]) + "1";
+            transitionFunctionToGoedelNumber[i][2] = stateToBinary.get(transitionFunctionToGoedelNumber[i][2]) + "1";
+            transitionFunctionToGoedelNumber[i][3] = inputToBinary.get(transitionFunctionToGoedelNumber[i][3]) + "1";
+            transitionFunctionToGoedelNumber[i][4] = movementToBinary.get(transitionFunctionToGoedelNumber[i][4]) + "11";
+            for (String element : transitionFunctionToGoedelNumber[i]) {
+                sb.append(element);
+            }
         }
+
+        ausgabe = sb.toString();
         System.out.println(ausgabe);
+
     }
 
     public String[][] goedelNumberToTransitionFunction(String goedelNumberWithoutInput) {
@@ -107,6 +138,7 @@ public class GoedelNumberCalc {
         for (int i = 0; i < characters.length; i++) {
             binaryStrings.put(characters[i], binary[i]);
         }
+
         return binaryStrings;
     }
 
@@ -125,6 +157,7 @@ public class GoedelNumberCalc {
         for (int i = 0; i < states.length; i++) {
             binaryStrings.put(states[i], binary[i]);
         }
+
         return binaryStrings;
     }
 
@@ -180,6 +213,10 @@ public class GoedelNumberCalc {
             System.out.println("Error reading file: " + e.getMessage());
             return null;
         }
+    }
+
+    public String[][] getTransitionFunctionToGoedelNumber() {
+        return transitionFunctionToGoedelNumber;
     }
 
 }
