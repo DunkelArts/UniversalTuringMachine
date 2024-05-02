@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,41 +18,7 @@ public class GoedelNumberCalc {
     Map<String, String> binaryToState;
     Map<String, String> binaryToInput;
     Map<String, String> binaryToMovement;
-    String[][] transitionFunctionToGoedelNumber = {
-            {"q1","0","q17","0","R"},
-            {"q1","1","q3","0","R"},
-            {"q17","0","q15","0","R"},
-            {"q17","1","q3","0","R"},
-            {"q3","0","q16","1","R"},
-            {"q3","1","q4","1","R"},
-            {"q4","0","q5","0","L"},
-            {"q4","1","q4","1","R"},
-            {"q5","0","q6","1","R"},
-            {"q5","1","q5","1","R"},
-            {"q6","0","q7","0","L"},
-            {"q6","1","q6","1","L"},
-            {"q7","0","q10","1","L"},
-            {"q7","1","q9","1","L"},
-            {"q8","0","q4","1","R"},
-            {"q8","1","q8","1","L"},
-            {"q9","0","q11","0","L"},
-            {"q9","1","q10","1","L"},
-            {"q10","0","q13","0","R"},
-            {"q10","1","q12","1","L"},
-            {"q11","0","q1","0","R"},
-            {"q11","1","q11","1","L"},
-            {"q12","0","q12","0","R"},
-            {"q12","1","q13","0","R"},
-            {"q13","0","q2","␣","S"},
-            {"q13","1","q13","0","R"},
-            {"q14","0","q2","␣","S"},
-            {"q14","1","q15","0","R"},
-            {"q15","0","q0","0","L"},
-            {"q15","1","q14","0","L"},
-            {"q16","0","q2","␣","S"},
-            {"q16","1","q16","0","L"}
-
-    };
+    String[][] transitionFunctionToGoedelNumber;
 
 
     public GoedelNumberCalc(String[] characters, String[] states) {
