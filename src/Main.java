@@ -17,17 +17,17 @@ public class Main {
         GoedelNumberCalc goedelNumberCalc = new GoedelNumberCalc(characters, states);
         // Define the Goedel number of the Turing machine starting with zero-Goedel number-111-Input or as decimal
         System.out.println("Read Goedel number from file? (y/n)");
-        userInput = scanner.nextLine();
-        if (userInput.equals("y")) {
+        String read = scanner.nextLine();
+        if (read.equals("y")) {
             goedelNumber = goedelNumberCalc.readGoedelNumberFromFile();
         } else {
             System.out.println("use Transition function? (y/n)");
             userInput = scanner.nextLine();
         }
-            if (userInput.equals("y")) {
-                transitionFunctionBool = true;
-            } else {
-                System.out.println("Please enter a Goedel number for the Turing Machine: ");
+        if (userInput.equals("y")) {
+            transitionFunctionBool = true;
+            } else if (userInput.equals("n")){
+                System.out.println("Please enter a Goedel number for the Turing Machine with input after 111: ");
                 goedelNumber = scanner.nextLine();
             }
 
@@ -64,6 +64,7 @@ public class Main {
                     boolean bingo = universalTU.run(transitionFunction, input);
                     if (bingo) {
                         System.out.println("this Turing Machine accepts");
+                        System.out.println("Output: " + universalTU.getTape().printTape());
                     } else {
                         System.out.println("this Turing Machine does not accept");
                     }
