@@ -1,5 +1,7 @@
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 class UniversalTU {
 
     private Tape tape;
@@ -26,10 +28,10 @@ class UniversalTU {
                 throw new OutOfTapeException();
             }
             if(stepMode){
-                System.out.println("State: " + currentstate);
+                System.out.println("Current State: " + currentstate);
+                System.out.println("Step: " + stepCounter);
                 System.out.println(tape.printTape());
                 System.out.println(tape.getPosition());
-                System.out.println("Step: " + stepCounter);
                 TimeUnit.SECONDS.sleep(1);
             }
 
