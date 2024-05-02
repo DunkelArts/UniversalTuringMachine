@@ -16,8 +16,8 @@ public class Main {
         
         // Define the Goedel number of the Turing machine starting with zero-Goedel number-111-Input or as decimal
         System.out.println("Read Goedel number from file? (y/n)");
-        String userInput = scanner.nextLine();
-        if (userInput.equals("y")) {
+        String read = scanner.nextLine();
+        if (read.equals("y")) {
             goedelNumber = goedelNumberCalc.readGoedelNumberFromFile();
         } else {
             System.out.println("Please enter a Goedel number for the Turing Machine: ");
