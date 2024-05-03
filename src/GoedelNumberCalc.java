@@ -18,17 +18,55 @@ public class GoedelNumberCalc {
     Map<String, String> binaryToState;
     Map<String, String> binaryToInput;
     Map<String, String> binaryToMovement;
-    String[][] transitionFunctionToGoedelNumber;
+    String[][] transitionFunctionToGoedelNumber = {{"q20","0","q1","0","R"},
+            {"q20","1","q17","0","R"},
+            {"q1","0","q14","0","R"},
+            {"q1","1","q17","0","R"},
+            {"q17","0","q3","0","R"},
+            {"q17","1","q17","1","R"},
+            {"q3","0","q15","0","L"},
+            {"q3","1","q4","0","R"},
+            {"q4","0","q5","0","R"},
+            {"q4","1","q4","1","R"},
+            {"q5","0","q6","1","L"},
+            {"q5","1","q5","1","R"},
+            {"q6","0","q7","0","L"},
+            {"q6","1","q6","1","L"},
+            {"q7","0","q9","1","L"},
+            {"q7","1","q8","1","L"},
+            {"q8","0","q3","1","R"},
+            {"q8","1","q8","1","L"},
+            {"q9","0","q10","0","L"},
+            {"q9","1","q9","1","L"},
+            {"q10","0","q12","␣","R"},
+            {"q10","1","q11","1","L"},
+            {"q11","0","q20","␣","R"},
+            {"q11","1","q11","1","L"},
+            {"q12","0","q12","␣","R"},
+            {"q12","1","q13","␣","R"},
+            {"q13","0","q2","␣","S"},
+            {"q13","1","q13","␣","R"},
+            {"q14","0","q2","0","S"},
+            {"q14","1","q14","0","R"},
+            {"q15","0","q16","0","L"},
+            {"q15","1","q15","0","L"},
+            {"q16","0","q2","0","S"},
+            {"q16","1","q16","0","L"},
+            {"q4","␣","q5","0","R"},
+            {"q5","␣","q6","1","L"},
+            {"q6","␣","q7","0","L"},
+            {"q11","␣","q20","0","R"}};
 
 
     public GoedelNumberCalc(String[] characters, String[] states) {
         stateToBinary = stateToBinary(states);
         inputToBinary = inputToBinary(characters);
-        movementToBinary = Map.of("L", binary[0], "R", binary[1], "-", binary[2]);
+        movementToBinary = Map.of("L", binary[0], "R", binary[1], "S", binary[2]);
         System.out.println(movementToBinary);
         binaryToState = binaryToState(states);
         binaryToInput = binaryToInput(characters);
         binaryToMovement = Map.of(binary[0], "L", binary[1], "R", binary[2], "S");
+        transitionFunctionToGoedelNumber();
     }
 
     // Define the encoding for the states, input alphabet, tape alphabet, and movements
@@ -64,7 +102,7 @@ public class GoedelNumberCalc {
         }
 
         ausgabe = sb.toString();
-        System.out.println(ausgabe);
+        System.out.println("A" + ausgabe);
 
     }
 
